@@ -71,7 +71,88 @@
 					</section>
 
 				<!-- Two -->
-					<section id="two" class="wrapper alt style2">
+				<section id="two" class="wrapper alt style2"> 
+					<section class="spotlight">
+						<div class="image slideshow-container" style="position: relative;">
+							<img id="slideshow" src="images/pic01.jpg" alt="" style="width:100%;"/>
+							   <!-- Left arrow -->
+							      <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+							      <!-- Right arrow -->
+							      <a class="next" onclick="changeSlide(1)">&#10095;</a>
+							    </div>
+							    <div class="content">
+							      <h2>A cute image of us here<br />
+							        sed ullamcorper</h2>
+							      <p>Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.</p>
+							    </div>
+							  </section>
+							</section>
+							
+							<style>
+							  /* Arrows */
+							  .prev, .next {
+							    cursor: pointer;
+							    position: absolute;
+							    top: 50%;
+							    width: auto;
+							    padding: 16px;
+							    margin-top: -22px;
+							    color: white;
+							    font-weight: bold;
+							    font-size: 24px;
+							    border-radius: 0 3px 3px 0;
+							    user-select: none;
+							    background-color: rgba(0,0,0,0.4);
+							    z-index: 10;
+							    transition: background 0.3s ease;
+							  }
+							
+							  .next {
+							    right: 0;
+							    border-radius: 3px 0 0 3px;
+							  }
+							
+							  .prev:hover, .next:hover {
+							    background-color: rgba(0,0,0,0.7);
+							  }
+							
+							  .slideshow-container {
+							    max-width: 100%;
+							    position: relative;
+							  }
+							
+							  #slideshow {
+							    width: 100%;
+							    display: block;
+							  }
+							</style>
+							
+							<script>
+							  const images = [
+							    "images/pic01.jpg",
+							    "images/pic02.jpg",
+							    "images/pic03.jpg"
+							  ];
+							
+							  let currentImageIndex = 0;
+							  const slideshow = document.getElementById("slideshow");
+							
+							  function showSlide(index) {
+							    currentImageIndex = (index + images.length) % images.length;
+							    slideshow.src = images[currentImageIndex];
+							  }
+							
+							  function changeSlide(direction) {
+							    showSlide(currentImageIndex + direction);
+							  }
+							
+							  // Optional: auto-slide every 5 seconds
+							  setInterval(() => {
+							    changeSlide(1);
+							  }, 5000);
+							</script>
+				<!--	
+				<section id="two" class="wrapper alt style2">
 						<section class="spotlight">
 							<div class="image"><img src="images/pic01.jpg" alt="" /></div><div class="content">
 								<h2>A cute image of us here<br />
@@ -79,6 +160,7 @@
 								<p>Aliquam ut ex ut augue consectetur interdum. Donec hendrerit imperdiet. Mauris eleifend fringilla nullam aenean mi ligula.</p>
 							</div>
 						</section>
+				-->
 						<section class="spotlight">
 							<div class="image"><img src="images/pic02.jpg" alt="" /></div><div class="content">
 								<h2>Another cute image of us<br />

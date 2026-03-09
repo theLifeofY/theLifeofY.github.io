@@ -52,6 +52,148 @@
 						</div>
 						<a href="#one" class="more scrolly">Wedding Details</a>
 					</section>
+
+				<!-- Full-width container with no padding/margins -->
+<div style="width: 100vw; margin-left: calc(-50vw + 50%); margin-top: 40px; overflow: hidden;">
+  
+  <div id="continuousSlider" style="position: relative; width: 100%; overflow: hidden;">
+    <!-- Inner sliding track - note the duplicate images for seamless loop -->
+    <div id="continuousTrack" style="display: flex; white-space: nowrap; will-change: transform;">
+      <!-- Original set of images -->
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 1" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 2" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 3" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 4" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 5" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 6" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 7" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 8" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 9" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      
+      <!-- Duplicate set of images for seamless looping -->
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 1" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 2" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 3" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 4" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 5" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 6" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 7" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 8" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 9" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: inline-block;" class="slider-image">
+    </div>
+  </div>
+</div>
+
+<!-- Title that stays within margins -->
+<div class="section-title">
+  <h4>Venue Photos:</h4>
+</div>
+
+<script>
+  const continuousTrack = document.getElementById('continuousTrack');
+  const continuousImages = continuousTrack.children;
+  const originalImageCount = 9; // Change this to match your actual number of unique images
+  
+  let animationFrame;
+  let startTime;
+  let scrollPosition = 0;
+  let isPaused = false;
+  
+  // Get image width based on screen size
+  function getImageWidth() {
+    return window.innerWidth <= 768 ? window.innerWidth : window.innerWidth / 3;
+  }
+  
+  // Get scroll speed (pixels per second)
+  function getScrollSpeed() {
+    // Slower on mobile (30px/sec), faster on desktop (50px/sec)
+    return window.innerWidth <= 768 ? 30 : 50;
+  }
+  
+  // Update image widths when screen resizes
+  function updateImageWidths() {
+    const imagesPerView = window.innerWidth <= 768 ? 1 : 3;
+    const newWidth = 100 / imagesPerView;
+    
+    Array.from(continuousImages).forEach(img => {
+      img.style.width = newWidth + 'vw';
+    });
+  }
+  
+  // Smooth continuous animation
+  function animate(timestamp) {
+    if (!startTime) startTime = timestamp;
+    if (isPaused) {
+      animationFrame = requestAnimationFrame(animate);
+      return;
+    }
+    
+    // Calculate elapsed time
+    const elapsed = (timestamp - startTime) / 1000; // in seconds
+    
+    // Calculate new scroll position
+    scrollPosition = (elapsed * getScrollSpeed()) % (getImageWidth() * originalImageCount);
+    
+    // Apply transform
+    continuousTrack.style.transform = `translateX(-${scrollPosition}px)`;
+    
+    // Continue animation
+    animationFrame = requestAnimationFrame(animate);
+  }
+  
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    updateImageWidths();
+    // Reset scroll position to avoid jumps
+    scrollPosition = 0;
+    continuousTrack.style.transform = 'translateX(0)';
+  });
+  
+  // Pause on hover (optional - remove if you don't want this)
+  document.getElementById('continuousSlider').addEventListener('mouseenter', () => {
+    isPaused = true;
+  });
+  
+  document.getElementById('continuousSlider').addEventListener('mouseleave', () => {
+    isPaused = false;
+    startTime = null; // Reset timing to avoid jumps
+  });
+  
+  // Initialize
+  updateImageWidths();
+  
+  // Start animation
+  animationFrame = requestAnimationFrame(animate);
+</script>
+
+<style>
+  /* Remove any default body margins */
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  /* Title styling */
+  .section-title {
+    padding: 20px 20px 10px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .slider-image {
+      height: 300px !important;
+    }
+  }
+  
+  /* Optional: Add fade effect on edges */
+  #continuousSlider {
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  }
+</style>
 				
 
 				<!-- Full-width container with no padding/margins -->

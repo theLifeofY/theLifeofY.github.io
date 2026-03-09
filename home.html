@@ -52,6 +52,147 @@
 						</div>
 						<a href="#one" class="more scrolly">Wedding Details</a>
 					</section>
+				
+
+				<!-- Full-width container with no padding/margins -->
+<div style="width: 100vw; margin-left: calc(-50vw + 50%); margin-top: 40px; overflow: hidden;">
+  
+  <div id="responsiveSlider" style="position: relative; width: 100%; overflow: hidden;">
+    <!-- Inner sliding track -->
+    <div id="responsiveTrack" style="display: flex; transition: transform 0.5s ease-in-out;">
+      <!-- Add your images - no gaps between them -->
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 1" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 2" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 3" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 4" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 5" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 6" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 7" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 8" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 9" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;" class="slider-image">
+    </div>
+  </div>
+</div>
+
+<!-- If you want a title that stays within margins above the edge-to-edge photos -->
+<div class="section-title">
+  <h4>Venue Photos:</h4>
+</div>
+
+<script>
+  const responsiveTrack = document.getElementById('responsiveTrack');
+  const responsiveImages = responsiveTrack.children;
+  let responsivePosition = 0;
+  let slideInterval;
+  let imagesPerView = getImagesPerView();
+  
+  // Determine how many images to show based on screen width
+  function getImagesPerView() {
+    return window.innerWidth <= 768 ? 1 : 3;
+  }
+  
+  // Calculate slide distance based on viewport width and images per view
+  function getSlideDistance() {
+    return window.innerWidth / getImagesPerView();
+  }
+  
+  // Update image widths based on screen size
+  function updateImageWidths() {
+    const newImagesPerView = getImagesPerView();
+    const newWidth = 100 / newImagesPerView;
+    
+    // Update all images
+    Array.from(responsiveImages).forEach(img => {
+      img.style.width = newWidth + 'vw';
+    });
+    
+    // Reset position to avoid layout issues
+    responsiveTrack.style.transition = 'none';
+    responsiveTrack.style.transform = 'translateX(0)';
+    responsivePosition = 0;
+    
+    // Force reflow
+    responsiveTrack.offsetHeight;
+    
+    // Restore transition
+    responsiveTrack.style.transition = 'transform 0.5s ease-in-out';
+    
+    // Update imagesPerView
+    imagesPerView = newImagesPerView;
+  }
+  
+  function responsiveSlideLeft() {
+    responsivePosition -= getSlideDistance();
+    
+    // Apply transform
+    responsiveTrack.style.transform = `translateX(${responsivePosition}px)`;
+    
+    // Infinite loop reset
+    if (Math.abs(responsivePosition) >= getSlideDistance() * (responsiveImages.length - imagesPerView)) {
+      setTimeout(() => {
+        responsiveTrack.style.transition = 'none';
+        responsiveTrack.style.transform = 'translateX(0)';
+        responsivePosition = 0;
+        
+        // Force reflow
+        responsiveTrack.offsetHeight;
+        
+        // Restore transition
+        responsiveTrack.style.transition = 'transform 0.5s ease-in-out';
+      }, 500);
+    }
+  }
+  
+  // Start auto-sliding
+  function startSlideshow() {
+    if (slideInterval) clearInterval(slideInterval);
+    slideInterval = setInterval(responsiveSlideLeft, 3000);
+  }
+  
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    updateImageWidths();
+    // Restart interval to avoid double triggers
+    startSlideshow();
+  });
+  
+  // Initialize
+  updateImageWidths();
+  startSlideshow();
+  
+  // Optional: Pause on hover
+  document.getElementById('responsiveSlider').addEventListener('mouseenter', () => {
+    clearInterval(slideInterval);
+  });
+  
+  document.getElementById('responsiveSlider').addEventListener('mouseleave', () => {
+    startSlideshow();
+  });
+</script>
+
+<style>
+  /* Remove any default body margins that might create white space */
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  /* Optional: Add a title that's contained within page margins */
+  .section-title {
+    padding: 20px 20px 10px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Mobile-specific adjustments */
+  @media (max-width: 768px) {
+    /* Make height a bit smaller on mobile if desired */
+    .slider-image {
+      height: 300px !important;
+    }
+  }
+</style>
 
 				<!-- Full-width container with no padding/margins -->
 <div style="width: 100vw; margin-left: calc(-50vw + 50%); margin-top: 40px; overflow: hidden;">
@@ -146,158 +287,6 @@
 </div>
 
 <!-- Then paste the full-width slider code above here -->
-
-			<div style="margin-top: 30px; border-top: 1px solid #ccc; padding-top: 20px;">
-  <h4>Venue Photos:</h4>
-  
-  <div id="filmstripSlider" style="position: relative; width: 100%; max-width: 1000px; margin: 0 auto; overflow: hidden;">
-    <!-- Inner container that will slide -->
-    <div id="filmstripTrack" style="display: flex; gap: 20px; transition: transform 0.5s ease-in-out;">
-      <!-- Add as many images as you want - they'll all be visible in the strip -->
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 1" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-      <img src="images/sam&sydandreaswedding.jpegg" alt="Photo 2" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 3" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 4" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 5" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 6" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 7" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 8" style="width: 300px; flex-shrink: 0; height: 250px; object-fit: cover; border-radius: 8px;">
-    </div>
-  </div>
-</div>
-
-<script>
-  const filmstripTrack = document.getElementById('filmstripTrack');
-  const images = filmstripTrack.children;
-  let currentPosition = 0;
-  
-  // Clone the first few images and append them to create an infinite loop effect
-  function setupInfiniteScroll() {
-    // Number of visible images depends on container width
-    // We'll clone enough to create a seamless loop
-    
-    // Get all original images
-    const originalImages = Array.from(images);
-    
-    // Clone first 4 images and append them
-    for (let i = 0; i < 4; i++) {
-      const clone = originalImages[i].cloneNode(true);
-      filmstripTrack.appendChild(clone);
-    }
-  }
-  
-  function slideLeft() {
-    currentPosition -= 320; // 300px width + 20px gap
-    
-    // Apply the transform
-    filmstripTrack.style.transform = `translateX(${currentPosition}px)`;
-    
-    // Check if we need to reset for infinite loop
-    if (Math.abs(currentPosition) >= (images.length - 4) * 320) {
-      // Jump back to start without animation
-      setTimeout(() => {
-        filmstripTrack.style.transition = 'none';
-        filmstripTrack.style.transform = 'translateX(0)';
-        currentPosition = 0;
-        
-        // Force reflow
-        filmstripTrack.offsetHeight;
-        
-        // Restore transition
-        filmstripTrack.style.transition = 'transform 0.5s ease-in-out';
-      }, 500);
-    }
-  }
-  
-  // Initialize
-  setupInfiniteScroll();
-  
-  // Slide every 3 seconds
-  setInterval(slideLeft, 3000);
-</script>
-
-<style>
-  /* Optional: Add fade effect on edges */
-  #filmstripSlider {
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    padding: 10px 0;
-  }
-  
-  /* Optional: Add shadow to images */
-  #filmstripSlider img {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
-  }
-  
-  #filmstripSlider img:hover {
-    transform: scale(1.05);
-  }
-</style>
-
-				<div style="margin-top: 30px; border-top: 1px solid #ccc; padding-top: 20px;">
-  <h4>Venue Photos:</h4>
-  
-  <div id="horizontalSlider" style="position: relative; width: 100%; max-width: 800px; margin: 0 auto; overflow: hidden;">
-    <!-- Inner container that will slide -->
-    <div id="sliderTrack" style="display: flex; transition: transform 0.5s ease-in-out;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 1" style="width: 100%; flex-shrink: 0; object-fit: cover; height: 400px;">
-      <img src="images/sam&sydcampincanada.jpg" alt="Photo 2" style="width: 100%; flex-shrink: 0; object-fit: cover; height: 400px;">
-      <img src="images/sam&sydcraterlake1.jpg" alt="Photo 3" style="width: 100%; flex-shrink: 0; object-fit: cover; height: 400px;">
-      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 4" style="width: 100%; flex-shrink: 0; object-fit: cover; height: 400px;">
-    </div>
-  </div>
-</div>
-
-<script>
-  const sliderTrack = document.getElementById('sliderTrack');
-  const slides = sliderTrack.children;
-  let currentIndex = 0;
-  
-  function showNextSlide() {
-    currentIndex = (currentIndex + 1) % slides.length;
-    const translateValue = -currentIndex * 100 + '%';
-    sliderTrack.style.transform = 'translateX(' + translateValue + ')';
-  }
-  
-  // Change slide every 3 seconds
-  setInterval(showNextSlide, 3000);
-</script>
-
-				<div style="margin-top: 30px; border-top: 1px solid #ccc; padding-top: 20px;">
-  <h4>Photo Gallery:</h4>
-  
-  <div id="simpleSlideshow" style="position: relative; width: 100%; max-width: 600px; height: 400px; overflow: hidden; margin: 0 auto;">
-    <img class="simple-slide active" src="images/sam&sydandreaswedding.jpeg" alt="Photo 1" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
-    <img class="simple-slide" src="images/sam&sydcampincanada.jpg" alt="Photo 2" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
-    <img class="simple-slide" src="images/sam&sydcraterlake1.jpg" alt="Photo 3" style="position: absolute; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease-in-out;">
-  </div>
-</div>
-
-<script>
-  // Simple auto-rotating slideshow
-  const simpleSlides = document.querySelectorAll('#simpleSlideshow .simple-slide');
-  let currentSimpleSlide = 0;
-  
-  function showNextSimpleSlide() {
-    simpleSlides[currentSimpleSlide].classList.remove('active');
-    currentSimpleSlide = (currentSimpleSlide + 1) % simpleSlides.length;
-    simpleSlides[currentSimpleSlide].classList.add('active');
-  }
-  
-  // Set initial active slide
-  simpleSlides[0].classList.add('active');
-  
-  // Change slide every 3 seconds
-  setInterval(showNextSimpleSlide, 3000);
-</script>
-
-<style>
-  .simple-slide.active {
-    opacity: 1 !important;
-    z-index: 1;
-  }
-</style>
 
 				<!-- One -->
 					<section id="one" class="wrapper style1 special">

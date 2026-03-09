@@ -53,6 +53,100 @@
 						<a href="#one" class="more scrolly">Wedding Details</a>
 					</section>
 
+				<!-- Full-width container with no padding/margins -->
+<div style="width: 100vw; margin-left: calc(-50vw + 50%); margin-top: 40px; overflow: hidden;">
+  
+  <div id="fullWidthSlider" style="position: relative; width: 100%; overflow: hidden;">
+    <!-- Inner sliding track -->
+    <div id="fullWidthTrack" style="display: flex; transition: transform 0.5s ease-in-out;">
+      <!-- Add your images - no gaps between them -->
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 1" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 2" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 3" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 4" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 5" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 6" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 7" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 8" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+      <img src="images/sam&sydandreaswedding.jpeg" alt="Photo 9" style="width: 33.333vw; flex-shrink: 0; height: 400px; object-fit: cover; display: block;">
+    </div>
+  </div>
+</div>
+
+<script>
+  const fullTrack = document.getElementById('fullWidthTrack');
+  const fullImages = fullTrack.children;
+  let fullPosition = 0;
+  
+  // Calculate slide distance based on viewport width
+  function getSlideDistance() {
+    // 33.333vw = one image width (showing 3 images at once)
+    return window.innerWidth * 0.33333;
+  }
+  
+  function fullSlideLeft() {
+    fullPosition -= getSlideDistance();
+    
+    // Apply transform
+    fullTrack.style.transform = `translateX(${fullPosition}px)`;
+    
+    // Infinite loop reset
+    if (Math.abs(fullPosition) >= getSlideDistance() * (fullImages.length - 3)) {
+      setTimeout(() => {
+        fullTrack.style.transition = 'none';
+        fullTrack.style.transform = 'translateX(0)';
+        fullPosition = 0;
+        
+        // Force reflow
+        fullTrack.offsetHeight;
+        
+        // Restore transition
+        fullTrack.style.transition = 'transform 0.5s ease-in-out';
+      }, 500);
+    }
+  }
+  
+  // Slide every 3 seconds
+  setInterval(fullSlideLeft, 3000);
+  
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    // Reset position on resize to avoid layout issues
+    fullTrack.style.transition = 'none';
+    fullTrack.style.transform = 'translateX(0)';
+    fullPosition = 0;
+    
+    // Force reflow
+    fullTrack.offsetHeight;
+    
+    // Restore transition
+    fullTrack.style.transition = 'transform 0.5s ease-in-out';
+  });
+</script>
+
+<style>
+  /* Remove any default body margins that might create white space */
+  body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  /* Optional: Add a title that's contained within page margins */
+  .section-title {
+    padding: 20px 20px 10px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+</style>
+
+<!-- If you want a title that stays within margins above the edge-to-edge photos -->
+<div class="section-title">
+  <h4>Venue Photos:</h4>
+</div>
+
+<!-- Then paste the full-width slider code above here -->
+
 			<div style="margin-top: 30px; border-top: 1px solid #ccc; padding-top: 20px;">
   <h4>Venue Photos:</h4>
   
